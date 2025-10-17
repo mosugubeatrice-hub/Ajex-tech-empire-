@@ -26,11 +26,9 @@ const X = ({ className }: { className?: string }) => (
 const navigation = [
   { name: "Home", href: "/" },
   { name: "Our Solutions", href: "/services" },
-  { name: "Proven Results", href: "/portfolio" },
+  { name: "Proven Results", href: "/work" },
   { name: "Insights", href: "/blog" },
   { name: "Our Vision", href: "/about" },
-  { name: "Our Founder", href: "/leadership" },
-  { name: "Client Portal", href: "/portal" },
   { name: "Start Your Project", href: "/contact" },
 ]
 
@@ -57,13 +55,12 @@ export function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="group flex items-center space-x-2">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition-opacity"></div>
-              <div className="relative bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 py-1 rounded-lg text-xl font-poppins font-bold">
-                AJEx
-              </div>
-            </div>
-            <span className="text-xl font-poppins font-bold text-foreground group-hover:text-primary transition-colors">
+            <img
+              src="/logo.jpg"
+              alt="AJEx Tech Empire Logo"
+              className="h-10 w-10 rounded-lg object-cover hover:shadow-lg hover:shadow-blue-500/50 transition-all"
+            />
+            <span className="text-xl font-poppins font-bold text-foreground group-hover:text-primary transition-colors hidden sm:inline">
               Tech Empire
             </span>
           </Link>
@@ -94,9 +91,9 @@ export function Navigation() {
           {/* Desktop Navigation Buttons Container */}
           <div className="hidden md:flex items-center space-x-3">
             <ThemeToggle />
-            <Link href="/book-consultation">
+            <Link href="/quote">
               <Button className="relative overflow-hidden bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-montserrat font-medium px-6 py-2 rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg group">
-                <span className="relative z-10">Schedule Consultation</span>
+                <span className="relative z-10">Get a Quote</span>
                 <div className="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
               </Button>
             </Link>
@@ -134,9 +131,9 @@ export function Navigation() {
                 </Link>
               ))}
               <div className="px-3 py-2">
-                <Link href="/book-consultation">
+                <Link href="/quote">
                   <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-montserrat font-medium py-3 rounded-lg transition-all duration-300">
-                    Schedule Consultation
+                    Get a Quote
                   </Button>
                 </Link>
               </div>

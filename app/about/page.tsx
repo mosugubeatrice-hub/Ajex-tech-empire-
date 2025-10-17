@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight, Target, Users, TrendingUp } from "lucide-react"
 import { AnimatedPhilosophyCards } from "@/components/animated-philosophy-cards"
 import { AnimatedStatsGrid } from "@/components/animated-stats-grid"
+import { PremiumTeamSection } from "@/components/premium-team-section"
 
 export default function AboutPage() {
   const philosophies = [
@@ -167,6 +168,9 @@ export default function AboutPage() {
         subtitle="Measurable results that speak for themselves."
       />
 
+      {/* Team Section */}
+      <PremiumTeamSection />
+
       {/* CTA Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-card">
         <div className="max-w-4xl mx-auto text-center">
@@ -188,7 +192,7 @@ export default function AboutPage() {
       <footer className="py-12 px-4 sm:px-6 lg:px-8 border-t border-border">
         <div className="max-w-7xl mx-auto text-center">
           <p className="text-muted-foreground">
-            © 2024 AJEx Tech Empire. All rights reserved. Precision-engineered for growth.
+            © 2025 AJEx Tech Empire. All rights reserved. Precision-engineered for growth.
           </p>
         </div>
       </footer>

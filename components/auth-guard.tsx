@@ -15,9 +15,17 @@ export function AuthGuard({ children }: AuthGuardProps) {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const router = useRouter()
-  const supabase = createClient()
 
   useEffect(() => {
+    const supabase = createClient()
+
+    if (!supabase) {
+      console.error("[v0] Unable to initialize Supabase client")
+      setLoading(false)
+      router.push("/auth/login")
+      return
+    }
+
     const getUser = async () => {
       const {
         data: { user },
@@ -43,7 +51,7 @@ export function AuthGuard({ children }: AuthGuardProps) {
     })
 
     return () => subscription.unsubscribe()
-  }, [router, supabase.auth])
+  }, [router])
 
   if (loading) {
     return (

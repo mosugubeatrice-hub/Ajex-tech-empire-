@@ -5,6 +5,8 @@ import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Suspense } from "react"
 import { ThemeProvider } from "@/components/theme-provider"
+import { Navigation } from "@/components/navigation"
+import { PremiumFooter } from "@/components/premium-footer"
 import "./globals.css"
 
 const poppins = Poppins({
@@ -67,7 +69,11 @@ export default function RootLayout({
       </head>
       <body className={`${poppins.variable} ${montserrat.variable} ${inter.variable} font-inter antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange={false}>
-          <Suspense fallback={null}>{children}</Suspense>
+          <Navigation />
+          <Suspense fallback={null}>
+            <main className="min-h-screen">{children}</main>
+          </Suspense>
+          <PremiumFooter />
           <Analytics />
           <SpeedInsights />
         </ThemeProvider>

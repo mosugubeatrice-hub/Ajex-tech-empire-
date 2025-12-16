@@ -1,6 +1,6 @@
 import { Navigation } from "@/components/navigation"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Target, Users, TrendingUp } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { AnimatedPhilosophyCards } from "@/components/animated-philosophy-cards"
 import { AnimatedStatsGrid } from "@/components/animated-stats-grid"
 import { PremiumTeamSection } from "@/components/premium-team-section"
@@ -8,18 +8,18 @@ import { PremiumTeamSection } from "@/components/premium-team-section"
 export default function AboutPage() {
   const philosophies = [
     {
-      icon: Target,
+      iconName: "target" as const,
       title: "Strategic Precision",
       description:
         "We combine deep industry insight with technical excellence to deliver solutions that drive real business results",
     },
     {
-      icon: Users,
+      iconName: "users" as const,
       title: "Transparent Partnership",
       description: "We believe in complete transparency, clear communication, and collaborative problem-solving",
     },
     {
-      icon: TrendingUp,
+      iconName: "trending-up" as const,
       title: "Results Obsession",
       description: "We measure our success by your growth - everything we do is focused on delivering measurable ROI",
     },
@@ -93,8 +93,7 @@ export default function AboutPage() {
             <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-balance">Our Philosophy</h2>
             <p className="text-xl text-muted-foreground text-pretty">Three core principles guide everything we do.</p>
           </div>
-
-          <AnimatedPhilosophyCards philosophies={philosophies} />
+          <AnimatedPhilosophyCards philosophies={philosophies} />{" "}
         </div>
       </section>
 

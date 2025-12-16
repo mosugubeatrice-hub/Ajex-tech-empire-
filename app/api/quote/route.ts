@@ -1,7 +1,14 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { createClient } from "@supabase/supabase-js"
 
-const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+let supabaseAdmin: ReturnType<typeof createClient> | null = null
+
+function getSupabaseAdmin() {
+  if (!supabaseAdmin) {
+    supabaseAdmin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+  }
+  return supabaseAdmin
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -12,6 +19,8 @@ export async function POST(request: NextRequest) {
     if (!name || !email || !services || !services.length) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
     }
+
+    const supabase = getSupabaseAdmin()
 
     const { data, error } = await supabase.from("quotes").insert([
       {

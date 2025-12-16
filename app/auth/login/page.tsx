@@ -22,6 +22,12 @@ export default function LoginPage() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     const supabase = createClient()
+
+    if (!supabase) {
+      setError("Unable to connect to authentication service")
+      return
+    }
+
     setIsLoading(true)
     setError(null)
 

@@ -2,18 +2,32 @@
 
 import { Card, CardContent } from "@/components/ui/card"
 import { useEffect, useRef, useState } from "react"
-import type { LucideIcon } from "lucide-react"
+import { Target, Users, TrendingUp } from "lucide-react"
+
+interface PhilosophyData {
+  iconName: "target" | "users" | "trending-up"
+  title: string
+  description: string
+}
 
 interface PhilosophyCardProps {
-  icon: LucideIcon
+  iconName: "target" | "users" | "trending-up"
   title: string
   description: string
   index: number
 }
 
-export function AnimatedPhilosophyCard({ icon: Icon, title, description, index }: PhilosophyCardProps) {
+const iconMap = {
+  target: Target,
+  users: Users,
+  "trending-up": TrendingUp,
+}
+
+export function AnimatedPhilosophyCard({ iconName, title, description, index }: PhilosophyCardProps) {
   const [isVisible, setIsVisible] = useState(false)
   const cardRef = useRef<HTMLDivElement>(null)
+
+  const Icon = iconMap[iconName]
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -61,11 +75,7 @@ export function AnimatedPhilosophyCard({ icon: Icon, title, description, index }
 }
 
 interface AnimatedPhilosophyCardsProps {
-  philosophies: Array<{
-    icon: LucideIcon
-    title: string
-    description: string
-  }>
+  philosophies: Array<PhilosophyData>
 }
 
 export function AnimatedPhilosophyCards({ philosophies }: AnimatedPhilosophyCardsProps) {
@@ -74,7 +84,7 @@ export function AnimatedPhilosophyCards({ philosophies }: AnimatedPhilosophyCard
       {philosophies.map((philosophy, index) => (
         <AnimatedPhilosophyCard
           key={philosophy.title}
-          icon={philosophy.icon}
+          iconName={philosophy.iconName}
           title={philosophy.title}
           description={philosophy.description}
           index={index}

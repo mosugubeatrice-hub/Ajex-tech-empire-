@@ -1,13 +1,17 @@
+"use client"
+
 import { Navigation } from "@/components/navigation"
 import { Button } from "@/components/ui/button"
-import { InteractiveServiceCard } from "@/components/interactive-service-card"
 import { ScrollProgress } from "@/components/scroll-progress"
-import { ArrowRight, Globe, BarChart3, Zap, Search, Target, Code } from "lucide-react"
+import { ArrowRight, BarChart3, Search, Target, Code } from "lucide-react"
+import { InteractiveServiceCard } from "@/components/interactive-service-card"
+
+export const dynamic = "force-dynamic"
 
 export default function ServicesPage() {
   const services = [
     {
-      icon: Globe,
+      iconName: "globe",
       title: "Premium Web Design & Development",
       description:
         "We create stunning, high-performance websites that convert visitors into customers. Every design decision is backed by data and optimized for maximum conversion rates and user engagement.",
@@ -20,7 +24,7 @@ export default function ServicesPage() {
       ],
     },
     {
-      icon: BarChart3,
+      iconName: "bar-chart",
       title: "Strategic SEO & Content",
       description:
         "Our data-driven SEO strategies position your brand as an industry authority and drive sustainable organic growth through targeted content and technical excellence.",
@@ -33,7 +37,7 @@ export default function ServicesPage() {
       ],
     },
     {
-      icon: Zap,
+      iconName: "zap",
       title: "Performance Marketing",
       description:
         "We manage precision-targeted advertising campaigns that deliver measurable ROI and scalable customer acquisition across multiple channels.",
@@ -53,7 +57,6 @@ export default function ServicesPage() {
       <Navigation />
 
       <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        {/* Animated background elements */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5" />
         <div className="absolute top-20 left-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl animate-float" />
         <div className="absolute bottom-20 right-10 w-24 h-24 bg-secondary/10 rounded-full blur-2xl animate-float-delayed" />
@@ -86,10 +89,9 @@ export default function ServicesPage() {
 
                 <div className={index % 2 === 1 ? "lg:col-start-1" : ""}>
                   <div className="aspect-square bg-gradient-to-br from-primary/20 to-secondary/20 rounded-2xl p-8 backdrop-blur-sm border border-border relative overflow-hidden group">
-                    {/* Animated background pattern */}
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     <img
-                      src={`/abstract-geometric-shapes.png?height=400&width=400&query=${service.title.toLowerCase()} dashboard mockup`}
+                      src={`/.jpg?height=400&width=400&query=${service.title.toLowerCase()} dashboard mockup`}
                       alt={`${service.title} visualization`}
                       className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
                     />
@@ -114,37 +116,46 @@ export default function ServicesPage() {
           <div className="grid md:grid-cols-4 gap-8">
             {[
               {
-                icon: Search,
+                iconName: "search",
                 title: "Discovery & Audit",
                 description: "Deep analysis of your current digital presence and growth opportunities",
               },
               {
-                icon: Target,
+                iconName: "target",
                 title: "Strategy Development",
                 description: "Custom growth strategy aligned with your business objectives",
               },
               {
-                icon: Code,
+                iconName: "code",
                 title: "Precision Execution",
                 description: "Flawless implementation using cutting-edge technologies",
               },
               {
-                icon: BarChart3,
+                iconName: "bar-chart",
                 title: "Optimization & Growth",
                 description: "Continuous monitoring and optimization for maximum ROI",
               },
-            ].map((step, index) => (
-              <div key={step.title} className="text-center">
-                <div className="mb-6">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <step.icon className="h-8 w-8 text-primary" />
+            ].map((step, index) => {
+              const iconMap = {
+                search: Search,
+                target: Target,
+                code: Code,
+                "bar-chart": BarChart3,
+              }
+              const Icon = iconMap[step.iconName as keyof typeof iconMap]
+              return (
+                <div key={step.title} className="text-center">
+                  <div className="mb-6">
+                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Icon className="h-8 w-8 text-primary" />
+                    </div>
+                    <div className="text-sm text-secondary font-semibold">Step {index + 1}</div>
                   </div>
-                  <div className="text-sm text-secondary font-semibold">Step {index + 1}</div>
+                  <h3 className="text-xl font-bold mb-3">{step.title}</h3>
+                  <p className="text-muted-foreground text-pretty">{step.description}</p>
                 </div>
-                <h3 className="text-xl font-bold mb-3">{step.title}</h3>
-                <p className="text-muted-foreground text-pretty">{step.description}</p>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>
@@ -163,11 +174,10 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="py-12 px-4 sm:px-6 lg:px-8 border-t border-border">
         <div className="max-w-7xl mx-auto text-center">
           <p className="text-muted-foreground">
-            © 2024 AJEx Tech Empire. All rights reserved. Precision-engineered for growth.
+            © 2025 AJEx Tech Empire. All rights reserved. Precision-engineered for growth.
           </p>
         </div>
       </footer>

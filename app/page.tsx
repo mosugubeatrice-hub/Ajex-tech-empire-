@@ -6,6 +6,8 @@ import { ArrowRight, TrendingUp, Palette, Code, Brain, Target, Sparkles } from "
 import { useEffect, useState } from "react"
 import { PremiumTestimonials } from "@/components/premium-testimonials"
 
+export const dynamic = "force-dynamic"
+
 export default function HomePage() {
   const [isLoaded, setIsLoaded] = useState(false)
 
@@ -15,32 +17,32 @@ export default function HomePage() {
 
   const services = [
     {
-      icon: Code,
+      iconName: "code",
       title: "Web Design & Development",
       description: "High-performance digital experiences that convert",
     },
     {
-      icon: TrendingUp,
+      iconName: "trending-up",
       title: "SEO & Content Strategy",
       description: "From visibility to conversion — organic growth that scales",
     },
     {
-      icon: Target,
+      iconName: "target",
       title: "Performance Marketing",
       description: "Precision-targeted campaigns that drive predictable revenue",
     },
     {
-      icon: Palette,
+      iconName: "palette",
       title: "Brand Strategy & Design",
       description: "Visual identity that commands market presence",
     },
     {
-      icon: Brain,
+      iconName: "brain",
       title: "AI-Powered Marketing",
       description: "Intelligent automation that amplifies your growth",
     },
     {
-      icon: Sparkles,
+      iconName: "sparkles",
       title: "Growth Consulting",
       description: "Strategic roadmaps for sustainable business expansion",
     },
@@ -126,7 +128,15 @@ export default function HomePage() {
 
           <div className="grid md:grid-cols-3 gap-6">
             {services.map((service, i) => {
-              const Icon = service.icon
+              const iconMap = {
+                code: Code,
+                "trending-up": TrendingUp,
+                target: Target,
+                palette: Palette,
+                brain: Brain,
+                sparkles: Sparkles,
+              }
+              const Icon = iconMap[service.iconName as keyof typeof iconMap]
               return (
                 <div
                   key={i}

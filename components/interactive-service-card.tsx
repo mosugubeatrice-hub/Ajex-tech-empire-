@@ -1,23 +1,28 @@
 "use client"
 
-import type React from "react"
-
 import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { CheckCircle, ArrowRight, Sparkles } from "lucide-react"
+import { CheckCircle, ArrowRight, Sparkles, Globe, BarChart3, Zap } from "lucide-react"
 import { cn } from "@/lib/utils"
 
+const iconMap = {
+  globe: Globe,
+  "bar-chart": BarChart3,
+  zap: Zap,
+}
+
 interface ServiceCardProps {
-  icon: React.ComponentType<{ className?: string }>
+  iconName: keyof typeof iconMap
   title: string
   description: string
   features: string[]
   index: number
 }
 
-export function InteractiveServiceCard({ icon: Icon, title, description, features, index }: ServiceCardProps) {
+export function InteractiveServiceCard({ iconName, title, description, features, index }: ServiceCardProps) {
   const [isHovered, setIsHovered] = useState(false)
+  const Icon = iconMap[iconName]
 
   return (
     <Card
@@ -29,10 +34,8 @@ export function InteractiveServiceCard({ icon: Icon, title, description, feature
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Animated background gradient */}
       <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-      {/* Floating sparkles animation */}
       <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
         <Sparkles className="h-5 w-5 text-primary animate-pulse" />
       </div>

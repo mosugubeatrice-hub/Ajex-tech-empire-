@@ -1,24 +1,26 @@
 import { Navigation } from "@/components/navigation"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Lightbulb, Target, TrendingUp } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { AnimatedPhilosophyCards } from "@/components/animated-philosophy-cards"
 import { PremiumLeadershipProfile } from "@/components/premium-leadership-profile"
 import { AnimatedStatsGrid } from "@/components/animated-stats-grid"
 
+export const dynamic = "force-dynamic"
+
 export default function LeadershipPage() {
   const principles = [
     {
-      icon: Lightbulb,
+      iconName: "target" as const,
       title: "Visionary Execution",
       description: "Big ideas require flawless execution - we bridge strategy with implementation",
     },
     {
-      icon: Target,
+      iconName: "users" as const,
       title: "Client Success Focus",
       description: "Your growth is our most important metric - we're invested in your success",
     },
     {
-      icon: TrendingUp,
+      iconName: "trending-up" as const,
       title: "Technical Excellence",
       description: "We stay at the forefront of digital innovation to deliver cutting-edge solutions",
     },

@@ -11,6 +11,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ArrowRight, CheckCircle, Calendar, Clock, Users } from "lucide-react"
 import { useState } from "react"
 
+export const dynamic = "force-dynamic"
+
 export default function QuotePage() {
   const [formData, setFormData] = useState({
     name: "",

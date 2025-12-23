@@ -5,6 +5,8 @@ import { AnimatedCounter } from "@/components/animated-counter"
 import { ScrollProgress } from "@/components/scroll-progress"
 import { ArrowRight, TrendingUp, Users, DollarSign } from "lucide-react"
 
+export const dynamic = "force-dynamic"
+
 export default function PortfolioPage() {
   const caseStudies = [
     {

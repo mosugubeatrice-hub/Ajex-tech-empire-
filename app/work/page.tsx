@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight, ExternalLink } from "lucide-react"
 import { useState } from "react"
 
+export const dynamic = "force-dynamic"
+
 export default function WorkPage() {
   const [activeFilter, setActiveFilter] = useState("all")
 

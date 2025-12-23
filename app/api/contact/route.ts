@@ -1,14 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { createClient } from "@supabase/supabase-js"
-
-let supabaseAdmin: ReturnType<typeof createClient> | null = null
-
-function getSupabaseAdmin() {
-  if (!supabaseAdmin) {
-    supabaseAdmin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
-  }
-  return supabaseAdmin
-}
+import { getServerClient } from "@/lib/supabase/server"
 
 export async function POST(request: NextRequest) {
   try {
@@ -20,7 +11,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
     }
 
-    const supabase = getSupabaseAdmin()
+    const supabase = getServerClient()
+    if (!supabase) {
+      return NextResponse.json({ error: "Database connection unavailable" }, { status: 500 })
+    }
 
     const { data, error } = await supabase
       .from("contacts")

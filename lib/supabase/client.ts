@@ -2,10 +2,9 @@ import { createClient as createSupabaseClient, type SupabaseClient } from "@supa
 
 let supabaseInstance: SupabaseClient | null = null
 
-export function createClient() {
+export function createClient(): SupabaseClient | null {
   if (typeof window === "undefined") {
-    // Return a dummy client during SSR/build time to prevent errors
-    return null as any
+    return null
   }
 
   if (supabaseInstance) {
@@ -16,16 +15,22 @@ export function createClient() {
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
   if (!supabaseUrl || !supabaseAnonKey) {
-    console.error("[v0] Supabase environment variables are not set")
-    return null as any
+    console.error("[v0] Missing Supabase environment variables")
+    return null
   }
 
   supabaseInstance = createSupabaseClient(supabaseUrl, supabaseAnonKey, {
     auth: {
       persistSession: true,
       autoRefreshToken: true,
+      detectSessionInUrl: true,
+      storage: typeof window !== "undefined" ? window.localStorage : undefined,
     },
   })
 
   return supabaseInstance
+}
+
+export function getSupabaseClient(): SupabaseClient | null {
+  return createClient()
 }

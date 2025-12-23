@@ -1,13 +1,29 @@
 import { createClient as createSupabaseClient, type SupabaseClient } from "@supabase/supabase-js"
 
-let serverClient: SupabaseClient | null = null
+// Server-side singleton for service role operations (admin)
+let serverAdminClient: SupabaseClient | null = null
 
-export function createClient() {
-  if (!serverClient) {
-    serverClient = createSupabaseClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    )
+export function createClient(): SupabaseClient | null {
+  if (!serverAdminClient) {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const key = process.env.SUPABASE_SERVICE_ROLE_KEY
+
+    if (!url || !key) {
+      console.error("[v0] Supabase server environment variables are missing")
+      return null
+    }
+
+    serverAdminClient = createSupabaseClient(url, key, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+      },
+    })
   }
-  return serverClient
+
+  return serverAdminClient
+}
+
+export function getServerClient(): SupabaseClient | null {
+  return createClient()
 }

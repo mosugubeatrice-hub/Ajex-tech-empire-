@@ -174,7 +174,11 @@ export default function HomePage() {
               </Link>
             </div>
             <div className="relative h-96 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-xl border border-blue-500/30 flex items-center justify-center overflow-hidden">
-              <img src="/ceo-isaac-ajeh.jpg" alt="Isaac Ajeh, Founder & CEO" className="w-full h-full object-cover" />
+              <img
+                src="/ceo.jpg"
+                alt="Isaac Ajeh, Founder & CEO - AJEx Tech Empire"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+              />
             </div>
           </div>
         </div>

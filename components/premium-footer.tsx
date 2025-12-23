@@ -265,36 +265,32 @@ export function PremiumFooter() {
                   <Icons.Mail className="h-5 w-5 text-primary mt-0.5" />
                   <div>
                     <p className="text-sm text-muted-foreground">Email</p>
-                    <p className="text-foreground">hello@ajextechempire.com</p>
+                    <p className="text-foreground">ajexlink@gmail.com</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Icons.Phone className="h-5 w-5 text-primary mt-0.5" />
                   <div>
-                    <p className="text-sm text-muted-foreground">Phone</p>
-                    <p className="text-foreground">+1 (555) 123-4567</p>
+                    <p className="text-sm text-muted-foreground">Support</p>
+                    <p className="text-foreground">support@ajextechempire.com</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Icons.MapPin className="h-5 w-5 text-primary mt-0.5" />
+                  <Icons.Globe className="h-5 w-5 text-primary mt-0.5" />
                   <div>
-                    <p className="text-sm text-muted-foreground">Address</p>
-                    <p className="text-foreground">
-                      123 Innovation Drive
-                      <br />
-                      Tech District, CA 90210
-                    </p>
+                    <p className="text-sm text-muted-foreground">Online Presence</p>
+                    <p className="text-foreground">Global · Digital-First</p>
                   </div>
                 </div>
               </div>
 
               <Card className="mt-6 bg-gradient-to-br from-primary/5 to-secondary/5 border-primary/20">
                 <CardContent className="p-4">
-                  <h5 className="font-semibold mb-2 text-foreground">Ready to Start?</h5>
-                  <p className="text-sm text-muted-foreground mb-3">Schedule a free consultation today.</p>
-                  <Link href="/book-consultation">
+                  <h5 className="font-semibold mb-2 text-foreground">Ready to Elevate?</h5>
+                  <p className="text-sm text-muted-foreground mb-3">Schedule a free strategy call today.</p>
+                  <Link href="/contact">
                     <Button size="sm" className="w-full bg-primary hover:bg-primary/90">
-                      Book Consultation
+                      Book a Call
                     </Button>
                   </Link>
                 </CardContent>
@@ -313,9 +309,6 @@ export function PremiumFooter() {
               </Link>
               <Link href="/terms" className="text-muted-foreground hover:text-primary transition-colors">
                 Terms of Service
-              </Link>
-              <Link href="/cookies" className="text-muted-foreground hover:text-primary transition-colors">
-                Cookie Policy
               </Link>
             </div>
           </div>

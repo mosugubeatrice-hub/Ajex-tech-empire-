@@ -41,9 +41,6 @@ export default function SignUpPage() {
     }
 
     try {
-      const { count } = await supabase.from("profiles").select("*", { count: "exact" })
-      const isFirstUser = count === 0
-
       const { error: authError, data } = await supabase.auth.signUp({
         email,
         password,
@@ -59,24 +56,17 @@ export default function SignUpPage() {
       if (authError) throw authError
 
       if (data.user) {
-        const roleForNewUser = isFirstUser ? "ceo" : "client"
-        const { error: profileError } = await supabase.from("profiles").insert([
-          {
-            id: data.user.id,
-            first_name: firstName,
-            last_name: lastName,
-            email,
-            role: roleForNewUser,
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString(),
-          },
-        ])
+        let attempts = 0
+        let userRole = null
+        while (attempts < 5 && !userRole) {
+          await new Promise((resolve) => setTimeout(resolve, 500))
+          const { data: profile } = await supabase.from("profiles").select("role").eq("id", data.user.id).single()
 
-        if (profileError) {
-          throw new Error("Failed to create user profile")
+          userRole = profile?.role
+          attempts++
         }
 
-        const redirectPath = isFirstUser ? "/admin" : "/dashboard"
+        const redirectPath = userRole === "ceo" ? "/admin" : "/dashboard"
         router.push(redirectPath)
       }
     } catch (error: unknown) {

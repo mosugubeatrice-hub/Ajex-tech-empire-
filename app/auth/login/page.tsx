@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 import { useState, useEffect } from "react"
 import { Building2, CheckCircle } from "lucide-react"
 
@@ -19,7 +19,6 @@ function LoginContent() {
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
-  const router = useRouter()
   const searchParams = useSearchParams()
 
   useEffect(() => {
@@ -61,48 +60,22 @@ function LoginContent() {
 
       console.log("[v0] User authenticated:", data.user.id)
 
-      await new Promise((resolve) => setTimeout(resolve, 500))
+      const response = await fetch("/api/auth/success", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: data.user.id }),
+      })
 
-      let attempts = 0
-      let userRole = null
-
-      while (attempts < 15 && !userRole) {
-        const { data: profile, error: profileError } = await supabase
-          .from("profiles")
-          .select("role")
-          .eq("id", data.user.id)
-          .single()
-
-        console.log(`[v0] Profile fetch attempt ${attempts + 1}:`, { userRole: profile?.role, error: profileError })
-
-        if (profile?.role) {
-          userRole = profile.role
-          break
-        }
-
-        await new Promise((resolve) => setTimeout(resolve, 300))
-        attempts++
+      if (!response.ok) {
+        throw new Error("Failed to complete login")
       }
 
-      if (!userRole) {
-        console.error("[v0] Could not fetch user role after 15 attempts")
-        throw new Error("Unable to load user profile. Please try again.")
-      }
-
-      console.log("[v0] User role:", userRole)
-      const redirectPath =
-        userRole === "ceo" || userRole === "admin"
-          ? "/admin"
-          : userRole === "worker"
-            ? "/dashboard/worker"
-            : "/dashboard"
-
-      console.log("[v0] Redirecting to:", redirectPath)
-      router.push(redirectPath)
+      const { redirectUrl } = await response.json()
+      // Use window.location for hard redirect to ensure cookies are read by browser
+      window.location.href = redirectUrl
     } catch (error: unknown) {
       console.error("[v0] Login error:", error)
       setError(error instanceof Error ? error.message : "Invalid email or password")
-    } finally {
       setIsLoading(false)
     }
   }

@@ -53,21 +53,20 @@ export default function SignUpPage() {
           },
         },
       })
+
       if (authError) throw authError
 
       if (data.user) {
         let attempts = 0
         let userRole = null
-        while (attempts < 5 && !userRole) {
-          await new Promise((resolve) => setTimeout(resolve, 500))
+        while (attempts < 10 && !userRole) {
+          await new Promise((resolve) => setTimeout(resolve, 300))
           const { data: profile } = await supabase.from("profiles").select("role").eq("id", data.user.id).single()
-
           userRole = profile?.role
           attempts++
         }
 
-        const redirectPath = userRole === "ceo" ? "/admin" : "/dashboard"
-        router.push(redirectPath)
+        router.push("/auth/login?message=Account created. Please sign in.")
       }
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred")

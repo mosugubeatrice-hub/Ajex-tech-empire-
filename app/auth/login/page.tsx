@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import { Suspense } from "react"
 
 import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
@@ -8,16 +9,25 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
-import { Building2 } from "lucide-react"
+import { useRouter, useSearchParams } from "next/navigation"
+import { useState, useEffect } from "react"
+import { Building2, CheckCircle } from "lucide-react"
 
-export default function LoginPage() {
+function LoginContent() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
   const router = useRouter()
+  const searchParams = useSearchParams()
+
+  useEffect(() => {
+    const message = searchParams.get("message")
+    if (message) {
+      setSuccessMessage(message)
+    }
+  }, [searchParams])
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -32,15 +42,32 @@ export default function LoginPage() {
     setError(null)
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { error: signInError, data } = await supabase.auth.signInWithPassword({
         email,
         password,
-        options: {
-          emailRedirectTo: process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || `${window.location.origin}/dashboard`,
-        },
       })
-      if (error) throw error
-      router.push("/dashboard")
+
+      if (signInError) throw signInError
+
+      if (data.user) {
+        let attempts = 0
+        let userRole = null
+
+        while (attempts < 10 && !userRole) {
+          await new Promise((resolve) => setTimeout(resolve, 300))
+          const { data: profile } = await supabase.from("profiles").select("role").eq("id", data.user.id).single()
+          userRole = profile?.role
+          attempts++
+        }
+
+        const redirectPath =
+          userRole === "ceo" || userRole === "admin"
+            ? "/admin"
+            : userRole === "worker"
+              ? "/dashboard/worker"
+              : "/dashboard"
+        router.push(redirectPath)
+      }
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred")
     } finally {
@@ -68,6 +95,12 @@ export default function LoginPage() {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleLogin} className="space-y-4">
+              {successMessage && (
+                <div className="bg-green-50 border border-green-200 rounded-lg p-3 flex items-start gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <p className="text-sm text-green-600">{successMessage}</p>
+                </div>
+              )}
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
@@ -110,5 +143,13 @@ export default function LoginPage() {
         </Card>
       </div>
     </div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginContent />
+    </Suspense>
   )
 }

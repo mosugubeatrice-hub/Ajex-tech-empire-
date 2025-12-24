@@ -50,38 +50,58 @@ function LoginContent() {
 
       console.log("[v0] Sign in response:", { error: signInError, hasUser: !!data.user })
 
-      if (signInError) throw signInError
+      if (signInError) {
+        console.error("[v0] Sign in failed:", signInError)
+        throw signInError
+      }
 
-      if (data.user) {
-        console.log("[v0] User authenticated, fetching profile...")
-        let attempts = 0
-        let userRole = null
+      if (!data.user) {
+        throw new Error("No user returned from sign in")
+      }
 
-        while (attempts < 10 && !userRole) {
-          await new Promise((resolve) => setTimeout(resolve, 300))
-          const { data: profile, error: profileError } = await supabase
-            .from("profiles")
-            .select("role")
-            .eq("id", data.user.id)
-            .single()
-          console.log(`[v0] Profile fetch attempt ${attempts + 1}:`, { userRole: profile?.role, profileError })
-          userRole = profile?.role
-          attempts++
+      console.log("[v0] User authenticated:", data.user.id)
+
+      await new Promise((resolve) => setTimeout(resolve, 500))
+
+      let attempts = 0
+      let userRole = null
+
+      while (attempts < 15 && !userRole) {
+        const { data: profile, error: profileError } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", data.user.id)
+          .single()
+
+        console.log(`[v0] Profile fetch attempt ${attempts + 1}:`, { userRole: profile?.role, error: profileError })
+
+        if (profile?.role) {
+          userRole = profile.role
+          break
         }
 
-        console.log("[v0] Redirecting to path based on role:", userRole)
-        const redirectPath =
-          userRole === "ceo" || userRole === "admin"
-            ? "/admin"
-            : userRole === "worker"
-              ? "/dashboard/worker"
-              : "/dashboard"
-        console.log("[v0] Redirect path:", redirectPath)
-        router.push(redirectPath)
+        await new Promise((resolve) => setTimeout(resolve, 300))
+        attempts++
       }
+
+      if (!userRole) {
+        console.error("[v0] Could not fetch user role after 15 attempts")
+        throw new Error("Unable to load user profile. Please try again.")
+      }
+
+      console.log("[v0] User role:", userRole)
+      const redirectPath =
+        userRole === "ceo" || userRole === "admin"
+          ? "/admin"
+          : userRole === "worker"
+            ? "/dashboard/worker"
+            : "/dashboard"
+
+      console.log("[v0] Redirecting to:", redirectPath)
+      router.push(redirectPath)
     } catch (error: unknown) {
-      console.log("[v0] Login error:", error)
-      setError(error instanceof Error ? error.message : "An error occurred")
+      console.error("[v0] Login error:", error)
+      setError(error instanceof Error ? error.message : "Invalid email or password")
     } finally {
       setIsLoading(false)
     }

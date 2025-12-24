@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -66,10 +65,12 @@ export default function SignUpPage() {
           attempts++
         }
 
-        router.push("/auth/login?message=Account created. Please sign in.")
+        await supabase.auth.signOut()
+        router.push("/auth/login?message=Account created successfully. Please sign in with your credentials.")
       }
     } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : "An error occurred")
+      console.error("[v0] SignUp error:", error)
+      setError(error instanceof Error ? error.message : "An error occurred during signup")
     } finally {
       setIsLoading(false)
     }

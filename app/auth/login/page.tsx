@@ -42,33 +42,45 @@ function LoginContent() {
     setError(null)
 
     try {
+      console.log("[v0] Login attempt with email:", email)
       const { error: signInError, data } = await supabase.auth.signInWithPassword({
         email,
         password,
       })
 
+      console.log("[v0] Sign in response:", { error: signInError, hasUser: !!data.user })
+
       if (signInError) throw signInError
 
       if (data.user) {
+        console.log("[v0] User authenticated, fetching profile...")
         let attempts = 0
         let userRole = null
 
         while (attempts < 10 && !userRole) {
           await new Promise((resolve) => setTimeout(resolve, 300))
-          const { data: profile } = await supabase.from("profiles").select("role").eq("id", data.user.id).single()
+          const { data: profile, error: profileError } = await supabase
+            .from("profiles")
+            .select("role")
+            .eq("id", data.user.id)
+            .single()
+          console.log(`[v0] Profile fetch attempt ${attempts + 1}:`, { userRole: profile?.role, profileError })
           userRole = profile?.role
           attempts++
         }
 
+        console.log("[v0] Redirecting to path based on role:", userRole)
         const redirectPath =
           userRole === "ceo" || userRole === "admin"
             ? "/admin"
             : userRole === "worker"
               ? "/dashboard/worker"
               : "/dashboard"
+        console.log("[v0] Redirect path:", redirectPath)
         router.push(redirectPath)
       }
     } catch (error: unknown) {
+      console.log("[v0] Login error:", error)
       setError(error instanceof Error ? error.message : "An error occurred")
     } finally {
       setIsLoading(false)

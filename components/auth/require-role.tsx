@@ -5,18 +5,19 @@ import type React from "react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { createClient } from "@/lib/supabase/client"
-import type { UserRole } from "@/lib/auth/rbac"
+import type { RoleType } from "@/lib/constants"
 
 interface RequireRoleProps {
-  role: UserRole
+  allowedRoles: RoleType[]
   children: React.ReactNode
   fallback?: React.ReactNode
 }
 
 /**
  * Client-side role protection wrapper
+ * Updated to accept array of allowed roles instead of single role
  */
-export function RequireRole({ role, children, fallback }: RequireRoleProps) {
+export function RequireRole({ allowedRoles, children, fallback }: RequireRoleProps) {
   const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null)
   const router = useRouter()
 
@@ -39,7 +40,7 @@ export function RequireRole({ role, children, fallback }: RequireRoleProps) {
 
       const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single()
 
-      if (profile?.role === role) {
+      if (allowedRoles.includes(profile?.role)) {
         setIsAuthorized(true)
       } else {
         setIsAuthorized(false)
@@ -48,7 +49,7 @@ export function RequireRole({ role, children, fallback }: RequireRoleProps) {
     }
 
     checkRole()
-  }, [role, router])
+  }, [allowedRoles, router])
 
   if (isAuthorized === null) {
     return <div className="flex items-center justify-center min-h-screen">Loading...</div>

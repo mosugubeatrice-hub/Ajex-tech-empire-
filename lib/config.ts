@@ -32,10 +32,10 @@ export const BUSINESS_CONFIG = {
 
   // Authentication Configuration
   auth: {
-    emailVerificationRequired: true,
+    emailVerificationRequired: false, // Disable email verification requirement for immediate signup
     allowClientSignup: true,
     allowTeamSignup: true,
-    redirectAfterConfirm: "/auth/login", // or "/dashboard"
+    redirectAfterConfirm: "/dashboard",
     sessionDuration: 7 * 24 * 60 * 60, // 7 days in seconds
   },
 

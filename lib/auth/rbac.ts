@@ -1,13 +1,11 @@
-import { USER_ROLES, ROLE_PERMISSIONS } from "@/lib/config"
+import { ROLES, ROLE_PERMISSIONS, type RoleType } from "@/lib/constants"
 import { createServerClient } from "@supabase/ssr"
 import { cookies } from "next/headers"
-
-export type UserRole = (typeof USER_ROLES)[keyof typeof USER_ROLES]
 
 /**
  * Get user role from database
  */
-export async function getUserRole(userId: string): Promise<UserRole | null> {
+export async function getUserRole(userId: string): Promise<RoleType | null> {
   try {
     const cookieStore = await cookies()
     const supabase = createServerClient(
@@ -32,7 +30,7 @@ export async function getUserRole(userId: string): Promise<UserRole | null> {
       return null
     }
 
-    return data?.role as UserRole
+    return data?.role as RoleType
   } catch (error) {
     console.error("[RBAC] Failed to get user role:", error)
     return null
@@ -40,23 +38,64 @@ export async function getUserRole(userId: string): Promise<UserRole | null> {
 }
 
 /**
- * Check if user has permission
+ * Check if user has specific permission
  */
-export function hasPermission(role: UserRole, permission: keyof (typeof ROLE_PERMISSIONS)["admin"]): boolean {
-  const rolePermissions = ROLE_PERMISSIONS[role as keyof typeof ROLE_PERMISSIONS]
-  return rolePermissions?.[permission] ?? false
+export function hasPermission(role: RoleType | null, permission: keyof (typeof ROLE_PERMISSIONS)["ceo"]): boolean {
+  if (!role) return false
+  const permissions = ROLE_PERMISSIONS[role]
+  return permissions?.[permission] ?? false
+}
+
+/**
+ * Check if user is CEO (cannot be locked out)
+ */
+export function isCEO(role: RoleType | null): boolean {
+  return role === ROLES.CEO
 }
 
 /**
  * Check if user is admin
  */
-export function isAdmin(role: UserRole | null): boolean {
-  return role === USER_ROLES.ADMIN
+export function isAdmin(role: RoleType | null): boolean {
+  return role === ROLES.ADMIN
+}
+
+/**
+ * Check if user is worker
+ */
+export function isWorker(role: RoleType | null): boolean {
+  return role === ROLES.WORKER
 }
 
 /**
  * Check if user is client
  */
-export function isClient(role: UserRole | null): boolean {
-  return role === USER_ROLES.CLIENT
+export function isClient(role: RoleType | null): boolean {
+  return role === ROLES.CLIENT
 }
+
+/**
+ * Check if user can access admin panel
+ */
+export function canAccessAdmin(role: RoleType | null): boolean {
+  return hasPermission(role, "canAccessAdmin")
+}
+
+/**
+ * Get redirect path based on role
+ */
+export function getRedirectPathByRole(role: RoleType | null): string {
+  switch (role) {
+    case ROLES.CEO:
+    case ROLES.ADMIN:
+      return "/admin"
+    case ROLES.WORKER:
+      return "/dashboard/worker"
+    case ROLES.CLIENT:
+      return "/dashboard"
+    default:
+      return "/dashboard"
+  }
+}
+
+export type UserRole = RoleType

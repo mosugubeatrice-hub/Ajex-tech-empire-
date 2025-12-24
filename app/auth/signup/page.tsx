@@ -26,6 +26,11 @@ export default function SignUpPage() {
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault()
     const supabase = createClient()
+    if (!supabase) {
+      setError("Unable to connect to authentication service")
+      return
+    }
+
     setIsLoading(true)
     setError(null)
 
@@ -36,11 +41,14 @@ export default function SignUpPage() {
     }
 
     try {
-      const { error } = await supabase.auth.signUp({
+      const { count } = await supabase.from("profiles").select("*", { count: "exact" })
+      const isFirstUser = count === 0
+
+      const { error: authError, data } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
+          emailRedirectTo: undefined,
           data: {
             first_name: firstName,
             last_name: lastName,
@@ -48,8 +56,29 @@ export default function SignUpPage() {
           },
         },
       })
-      if (error) throw error
-      router.push("/auth/verify-email")
+      if (authError) throw authError
+
+      if (data.user) {
+        const roleForNewUser = isFirstUser ? "ceo" : "client"
+        const { error: profileError } = await supabase.from("profiles").insert([
+          {
+            id: data.user.id,
+            first_name: firstName,
+            last_name: lastName,
+            email,
+            role: roleForNewUser,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          },
+        ])
+
+        if (profileError) {
+          throw new Error("Failed to create user profile")
+        }
+
+        const redirectPath = isFirstUser ? "/admin" : "/dashboard"
+        router.push(redirectPath)
+      }
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred")
     } finally {

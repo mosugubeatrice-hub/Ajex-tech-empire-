@@ -5,7 +5,7 @@ import { RequireRole } from "@/components/auth/require-role"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
-import { USER_ROLES } from "@/lib/config"
+import { ROLES } from "@/lib/constants"
 
 export default function AdminPage() {
   const [stats, setStats] = useState({
@@ -33,7 +33,7 @@ export default function AdminPage() {
   }, [])
 
   return (
-    <RequireRole role={USER_ROLES.ADMIN}>
+    <RequireRole allowedRoles={[ROLES.CEO, ROLES.ADMIN]}>
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 pt-24 pb-12">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="mb-8">

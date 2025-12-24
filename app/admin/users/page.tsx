@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import Link from "next/link"
-import { USER_ROLES } from "@/lib/config"
+import { ROLES } from "@/lib/constants"
+import { Badge } from "@/components/ui/badge"
 
 interface User {
   id: string
@@ -21,6 +22,8 @@ interface User {
 export default function UsersPage() {
   const [users, setUsers] = useState<User[]>([])
   const [loading, setLoading] = useState(true)
+  const [selectedRole, setSelectedRole] = useState<string | null>(null)
+  const [selectedUser, setSelectedUser] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -39,14 +42,29 @@ export default function UsersPage() {
     fetchUsers()
   }, [])
 
+  const handleRoleChange = async (userId: string, newRole: string) => {
+    try {
+      const response = await fetch(`/api/admin/users/${userId}/role`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ role: newRole }),
+      })
+      if (response.ok) {
+        setUsers(users.map((u) => (u.id === userId ? { ...u, role: newRole } : u)))
+      }
+    } catch (error) {
+      console.error("Failed to update user role:", error)
+    }
+  }
+
   return (
-    <RequireRole role={USER_ROLES.ADMIN}>
+    <RequireRole allowedRoles={[ROLES.CEO, ROLES.ADMIN]}>
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 pt-24 pb-12">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="flex justify-between items-center mb-8">
             <div>
               <h1 className="text-4xl font-bold text-white mb-2">Users</h1>
-              <p className="text-gray-400">Manage user accounts</p>
+              <p className="text-gray-400">Manage user accounts and roles</p>
             </div>
             <Link href="/admin">
               <Button variant="outline">Back</Button>
@@ -72,6 +90,7 @@ export default function UsersPage() {
                         <TableHead>Role</TableHead>
                         <TableHead>Joined</TableHead>
                         <TableHead>Last Sign In</TableHead>
+                        <TableHead>Actions</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -82,13 +101,24 @@ export default function UsersPage() {
                             {user.first_name && user.last_name ? `${user.first_name} ${user.last_name}` : "—"}
                           </TableCell>
                           <TableCell>
-                            <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-blue-500/20 text-blue-300">
-                              {user.role || "client"}
-                            </span>
+                            <Badge variant="outline">{user.role || "client"}</Badge>
                           </TableCell>
                           <TableCell>{new Date(user.created_at).toLocaleDateString()}</TableCell>
                           <TableCell>
                             {user.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleDateString() : "Never"}
+                          </TableCell>
+                          <TableCell>
+                            <select
+                              value={user.role || "client"}
+                              onChange={(e) => handleRoleChange(user.id, e.target.value)}
+                              className="text-xs p-1 rounded bg-slate-700 text-white border border-slate-600"
+                              disabled={user.role === ROLES.CEO}
+                            >
+                              <option value={ROLES.CLIENT}>Client</option>
+                              <option value={ROLES.WORKER}>Worker</option>
+                              <option value={ROLES.ADMIN}>Admin</option>
+                              {/* CEO role cannot be changed */}
+                            </select>
                           </TableCell>
                         </TableRow>
                       ))}

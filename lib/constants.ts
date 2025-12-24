@@ -20,6 +20,70 @@ export const SUCCESS_MESSAGES = {
   USER_CREATED: "User created successfully",
 } as const
 
+export const ROLES = {
+  CEO: "ceo",
+  ADMIN: "admin",
+  WORKER: "worker",
+  CLIENT: "client",
+} as const
+
+export type RoleType = (typeof ROLES)[keyof typeof ROLES]
+
+export const ROLE_PERMISSIONS: Record<RoleType, Record<string, boolean>> = {
+  ceo: {
+    // CEO has absolute power, cannot be locked out
+    canAccessAdmin: true,
+    canManageUsers: true,
+    canManageWorkers: true,
+    canManageClients: true,
+    canAssignRoles: true,
+    canViewAnalytics: true,
+    canViewAuditLogs: true,
+    canAccessClientDashboard: true,
+    canInviteClients: true,
+    canViewAllData: true,
+  },
+  admin: {
+    // Admins can do most things except change CEO or manage other admins
+    canAccessAdmin: true,
+    canManageUsers: true,
+    canManageWorkers: true,
+    canManageClients: true,
+    canAssignRoles: false,
+    canViewAnalytics: true,
+    canViewAuditLogs: true,
+    canAccessClientDashboard: true,
+    canInviteClients: true,
+    canViewAllData: true,
+  },
+  worker: {
+    // Workers can manage assigned clients and invite new ones
+    canAccessAdmin: false,
+    canManageUsers: false,
+    canManageWorkers: false,
+    canManageClients: true, // Can manage assigned clients
+    canAssignRoles: false,
+    canViewAnalytics: false,
+    canViewAuditLogs: false,
+    canAccessClientDashboard: true,
+    canInviteClients: true, // Can invite new clients
+    canViewAllData: false,
+  },
+  client: {
+    // Clients have limited access to their own data
+    canAccessAdmin: false,
+    canManageUsers: false,
+    canManageWorkers: false,
+    canManageClients: false,
+    canAssignRoles: false,
+    canViewAnalytics: false,
+    canViewAuditLogs: false,
+    canAccessClientDashboard: true,
+    canInviteClients: false,
+    canViewAllData: false,
+  },
+} as const
+
 export const ROUTES = {
   // Public
   HOME: "/",
@@ -39,12 +103,9 @@ export const ROUTES = {
   // Dashboard
   DASHBOARD: "/dashboard",
   ADMIN: "/admin",
-  PROFILE: "/dashboard/profile",
-
-  // Admin Routes
   ADMIN_USERS: "/admin/users",
-  ADMIN_STATS: "/admin/stats",
-  ADMIN_SETTINGS: "/admin/settings",
+  WORKER: "/dashboard/worker",
+  PROFILE: "/dashboard/profile",
 } as const
 
 export type AuthError = (typeof AUTH_ERRORS)[keyof typeof AUTH_ERRORS]

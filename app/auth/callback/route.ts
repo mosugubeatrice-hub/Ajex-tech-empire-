@@ -1,6 +1,7 @@
 import { createServerClient } from "@supabase/ssr"
 import { cookies } from "next/headers"
 import { type NextRequest, NextResponse } from "next/server"
+import { getRedirectPathByRole } from "@/lib/auth/rbac"
 
 /**
  * Auth Callback Route
@@ -39,8 +40,8 @@ export async function GET(request: NextRequest) {
       if (user) {
         const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single()
 
-        const redirectUrl = profile?.role === "admin" ? "/admin" : next
-        return NextResponse.redirect(`${requestUrl.origin}${redirectUrl}`)
+        const redirectPath = getRedirectPathByRole(profile?.role || null)
+        return NextResponse.redirect(`${requestUrl.origin}${redirectPath}`)
       }
 
       return NextResponse.redirect(`${requestUrl.origin}/dashboard`)

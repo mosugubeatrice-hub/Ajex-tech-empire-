@@ -5,25 +5,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 import { cn } from "@/lib/utils"
-
-const Quote = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z" />
-    <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z" />
-  </svg>
-)
-
-const ChevronLeft = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <polyline points="15,18 9,12 15,6" />
-  </svg>
-)
-
-const ChevronRight = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <polyline points="9,18 15,12 9,6" />
-  </svg>
-)
+import { Quote, ChevronLeft, ChevronRight } from "lucide-react"
 
 interface Testimonial {
   id: number
@@ -122,7 +104,7 @@ export function PremiumTestimonials() {
                       <div className="flex flex-col lg:flex-row items-center gap-8">
                         {/* Quote content */}
                         <div className="flex-1 text-center lg:text-left">
-                          <Quote className="h-12 w-12 text-secondary mb-6 mx-auto lg:mx-0" />
+                          <Quote className="h-12 w-12 text-secondary mb-6 mx-auto lg:mx-0 fill-current" />
 
                           <blockquote className="text-2xl lg:text-3xl font-inter leading-relaxed text-foreground mb-8 text-pretty">
                             "{testimonial.content}"
@@ -167,6 +149,7 @@ export function PremiumTestimonials() {
               size="sm"
               onClick={prevTestimonial}
               className="rounded-full w-12 h-12 p-0 border-primary/20 hover:border-primary/50 bg-transparent"
+              aria-label="Previous testimonial"
             >
               <ChevronLeft className="h-5 w-5" />
             </Button>
@@ -193,6 +176,7 @@ export function PremiumTestimonials() {
               size="sm"
               onClick={nextTestimonial}
               className="rounded-full w-12 h-12 p-0 border-primary/20 hover:border-primary/50 bg-transparent"
+              aria-label="Next testimonial"
             >
               <ChevronRight className="h-5 w-5" />
             </Button>

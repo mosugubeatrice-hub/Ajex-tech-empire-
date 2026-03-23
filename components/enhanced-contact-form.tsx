@@ -46,12 +46,19 @@ export function EnhancedContactForm() {
     setSubmitStatus("idle")
 
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch("/contact-submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          company: formData.company,
+          phone: formData.phone,
+          message: formData.message,
+          serviceInterest: formData.service,
+        }),
       })
 
       const result = await response.json()

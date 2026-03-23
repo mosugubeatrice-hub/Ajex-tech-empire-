@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server"
 import { NextRequest, NextResponse } from "next/server"
+import { sendEmail, getLeadConfirmationEmail, getAdminNotificationEmail } from "@/lib/email/service"
 
 export async function POST(request: NextRequest) {
   try {
@@ -47,8 +48,27 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // TODO: Send email notification to admin
-    // sendEmailToAdmin(name, email, company, phone, message, serviceInterest)
+    // Send confirmation email to user
+    await sendEmail({
+      to: email,
+      subject: 'Thank you for contacting AJEx Tech Empire',
+      html: getLeadConfirmationEmail(name, serviceInterest || 'your inquiry'),
+    })
+
+    // Send notification to admin
+    await sendEmail({
+      to: process.env.ADMIN_EMAIL || process.env.EMAIL_USER || '',
+      subject: `New Lead: ${name}`,
+      html: getAdminNotificationEmail('lead', {
+        'Name': name,
+        'Email': email,
+        'Company': company || 'Not provided',
+        'Phone': phone || 'Not provided',
+        'Service Interest': serviceInterest || 'Not specified',
+        'Message': message.substring(0, 100) + (message.length > 100 ? '...' : ''),
+        'Submitted': new Date().toLocaleString(),
+      }),
+    })
 
     return NextResponse.json(
       {

@@ -114,12 +114,39 @@ export function BookingSystem() {
 
   const handleSubmit = async () => {
     setIsSubmitting(true)
+    try {
+      const response = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: bookingData.name,
+          email: bookingData.email,
+          company: bookingData.company || null,
+          phone: bookingData.phone || null,
+          date: bookingData.date,
+          time: bookingData.time,
+          timezone: 'UTC',
+          serviceType: bookingData.consultationType,
+          message: bookingData.projectDescription || null,
+          budget: null,
+        }),
+      })
 
-    // Simulate booking process
-    setTimeout(() => {
-      setIsSubmitting(false)
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Booking failed')
+      }
+
       setIsBooked(true)
-    }, 2000)
+    } catch (error) {
+      console.error('Booking error:', error)
+      alert('Failed to book consultation. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const getAvailableDates = () => {

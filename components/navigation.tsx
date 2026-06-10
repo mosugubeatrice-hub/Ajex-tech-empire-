@@ -7,21 +7,7 @@ import { ThemeToggle } from "@/components/theme-toggle"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { useState, useEffect } from "react"
-
-const Menu = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <line x1="3" y1="6" x2="21" y2="6" />
-    <line x1="3" y1="12" x2="21" y2="12" />
-    <line x1="3" y1="18" x2="21" y2="18" />
-  </svg>
-)
-
-const X = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <line x1="18" y1="6" x2="6" y2="18" />
-    <line x1="6" y1="6" x2="18" y2="18" />
-  </svg>
-)
+import { Menu, X } from "lucide-react"
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -61,7 +47,7 @@ export function Navigation() {
               className="h-10 w-10 rounded-lg object-cover hover:shadow-lg hover:shadow-blue-500/50 transition-all"
             />
             <span className="text-xl font-poppins font-bold text-foreground group-hover:text-primary transition-colors hidden sm:inline">
-              Tech Empire
+              AJEx Tech Empire
             </span>
           </Link>
 
@@ -104,11 +90,12 @@ export function Navigation() {
             <ThemeToggle />
             <Button
               variant="ghost"
-              size="sm"
+              size="icon"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-foreground hover:bg-primary/10 transition-colors"
+              className="md:hidden"
+              aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <Icons.X className="h-6 w-6" /> : <Icons.Menu className="h-6 w-6" />}
+              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
           </div>
         </div>

@@ -1,3 +1,5 @@
+// This component must only be used in Server Components (like layout.tsx)
+// Do not use in client components ("use client")
 import Script from "next/script"
 
 interface PremiumSEOProps {

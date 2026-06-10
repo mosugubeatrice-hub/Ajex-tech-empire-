@@ -1,3 +1,5 @@
+// This component must only be used in Server Components (like layout.tsx)
+// Do not use in client components ("use client")
 import Script from "next/script"
 
 interface StructuredDataProps {
@@ -6,6 +8,9 @@ interface StructuredDataProps {
 }
 
 export function StructuredData({ type, data }: StructuredDataProps) {
+  // WARNING: This uses next/script and should ONLY be rendered server-side
+  // If you see "script tag while rendering React component" error, 
+  // ensure this component is not imported in a "use client" component
   const generateSchema = () => {
     switch (type) {
       case "organization":

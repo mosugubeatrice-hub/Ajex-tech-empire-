@@ -3,11 +3,11 @@
 ## 🎯 5-Minute Setup
 
 ### 1. Login to Admin Panel
-```
+\`\`\`
 URL:      https://your-domain.com/admin
 Email:    admin@ajex-tech-empire.com
 Password: AJEx2024!Admin#Secure
-```
+\`\`\`
 
 ### 2. Change Your Password
 - Click Settings (bottom left sidebar)
@@ -101,40 +101,40 @@ Password: AJEx2024!Admin#Secure
 ## 🔍 Common Tasks
 
 ### Finding a Lead
-```
+\`\`\`
 1. Click Leads
 2. Use search or filter
 3. Click to view details
 4. Update status
 5. Save changes
-```
+\`\`\`
 
 ### Adding a Product
-```
+\`\`\`
 1. Navigate to Products (if available)
 2. Click Add New
 3. Fill in details
 4. Set price
 5. Save
-```
+\`\`\`
 
 ### Creating Invoice
-```
+\`\`\`
 1. Navigate to Invoices
 2. Click New Invoice
 3. Select customer
 4. Add items
 5. Generate PDF
-```
+\`\`\`
 
 ### Managing Customer
-```
+\`\`\`
 1. Click Customers
 2. Search by name
 3. View all details
 4. Update info
 5. Save changes
-```
+\`\`\`
 
 ---
 
@@ -224,7 +224,7 @@ Supabase auto-backs up, but also manually export important data.
 
 ## 📊 Sample Dashboard View
 
-```
+\`\`\`
 ┌─────────────────────────────────────┐
 │ AJEx Tech Empire Admin Dashboard    │
 ├─────────────────────────────────────┤
@@ -236,7 +236,7 @@ Supabase auto-backs up, but also manually export important data.
 ├─────────────────────────────────────┤
 │ Recent Activity: 5 new leads today  │
 └─────────────────────────────────────┘
-```
+\`\`\`
 
 ---
 

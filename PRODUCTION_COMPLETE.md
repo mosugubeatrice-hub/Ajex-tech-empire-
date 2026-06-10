@@ -66,11 +66,11 @@
 ## 🔑 Admin Credentials
 
 ### Primary Admin Account
-```
+\`\`\`
 Email:    admin@ajex-tech-empire.com
 Password: AJEx2024!Admin#Secure
 Role:     CEO (Full Access)
-```
+\`\`\`
 
 ⚠️ **Change this password immediately after first login!**
 

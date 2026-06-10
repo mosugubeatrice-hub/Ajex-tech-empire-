@@ -19,7 +19,7 @@ AJEx Tech Empire is now a fully functional, production-ready SaaS platform with:
 
 All business configuration is centralized in `lib/config.ts`:
 
-```typescript
+\`\`\`typescript
 BUSINESS_CONFIG = {
   name: "AJEx Tech Empire",
   founder: "Isaac Ajeh",
@@ -31,7 +31,7 @@ BUSINESS_CONFIG = {
   },
   // ... more config
 }
-```
+\`\`\`
 
 ### 2. Authentication Flow
 
@@ -138,7 +138,7 @@ Email sending is configured in `lib/email/send.ts`.
 
 These features are ready for implementation:
 
-```typescript
+\`\`\`typescript
 features: {
   payments: false,      // Enable when payment processing ready
   subscriptions: false, // Enable for subscription model
@@ -149,7 +149,7 @@ features: {
   analytics: false,     // Enable for analytics
   multiTenant: false,   // Enable for multi-tenant support
 }
-```
+\`\`\`
 
 ## API Routes
 
@@ -170,16 +170,16 @@ features: {
 ## Environment Variables
 
 Required Supabase variables (automatically set):
-```
+\`\`\`
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=
 NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL= (for local dev)
-```
+\`\`\`
 
 ## File Structure
 
-```
+\`\`\`
 app/
 ├── auth/
 │   ├── login/page.tsx
@@ -212,7 +212,7 @@ lib/
 components/
 ├── auth/
 │   └── require-role.tsx (NEW - role protection wrapper)
-```
+\`\`\`
 
 ## Security Notes
 

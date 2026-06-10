@@ -11,11 +11,11 @@ Your AJEx Tech Empire application requires Supabase environment variables to fun
 3. Click **Settings** → **API**
 4. Copy the following values:
 
-```
+\`\`\`
 Project URL: https://casrjmlrfesxcbuymlde.supabase.co
 Anon Public Key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 Service Role Key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-```
+\`\`\`
 
 ### Step 2: Configure in v0 Settings
 

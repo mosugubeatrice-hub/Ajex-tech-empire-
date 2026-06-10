@@ -1,19 +1,12 @@
-"use client"
-
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, TrendingUp, Palette, Code, Brain, Target, Sparkles } from "lucide-react"
-import { useEffect, useState } from "react"
 import { PremiumTestimonials } from "@/components/premium-testimonials"
 
 export const dynamic = "force-dynamic"
 
 export default function HomePage() {
-  const [isLoaded, setIsLoaded] = useState(false)
-
-  useEffect(() => {
-    setIsLoaded(true)
-  }, [])
+  const isLoaded = true
 
   const services = [
     {
@@ -67,9 +60,8 @@ export default function HomePage() {
           ></div>
         </div>
 
-        <div
-          className={`relative z-10 container mx-auto px-4 text-center max-w-4xl transition-all duration-1000 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-        >
+        <div className="relative z-10 container mx-auto px-4 text-center max-w-4xl transition-all duration-1000 opacity-100 translate-y-0">
+        
           <div className="mb-6 inline-block">
             <span className="px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-300 text-sm font-medium">
               ✨ Premium Digital Growth Agency

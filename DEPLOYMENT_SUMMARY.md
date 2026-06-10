@@ -86,7 +86,7 @@
 - **Analytics**: Google Analytics 4, Vercel Analytics, Speed Insights
 
 ### Key Dependencies
-```json
+\`\`\`json
 {
   "@ai-sdk/groq": "2.0.19",
   "ai": "5.0.44",
@@ -96,7 +96,7 @@
   "lucide-react": "0.544.0",
   "framer-motion": "12.23.13"
 }
-```
+\`\`\`
 
 ---
 
@@ -145,7 +145,7 @@
 
 ## Environment Variables Required
 
-```env
+\`\`\`env
 # Supabase
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
@@ -156,7 +156,7 @@ GROQ_API_KEY=
 
 # Analytics
 NEXT_PUBLIC_GA_MEASUREMENT_ID=
-```
+\`\`\`
 
 ---
 

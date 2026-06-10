@@ -53,9 +53,9 @@
 ## 📱 Dashboard Access
 
 ### Admin Panel URL
-```
+\`\`\`
 https://your-domain.com/admin
-```
+\`\`\`
 
 ### Key Admin Pages
 1. **Dashboard** (`/admin`) - Overview and stats
@@ -93,14 +93,14 @@ All dashboards pull live data from:
 ## 🚀 Deployment
 
 ### Environment Variables Required
-```
+\`\`\`
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=
 ADMIN_EMAIL=
 EMAIL_USER=
 EMAIL_PASSWORD=
-```
+\`\`\`
 
 ### Deploy to Vercel
 1. Push code to GitHub

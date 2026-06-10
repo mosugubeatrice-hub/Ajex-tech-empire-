@@ -3,25 +3,25 @@
 ## Admin Login Details
 
 ### Primary Admin Account (CEO)
-```
+\`\`\`
 Email:    admin@ajex-tech-empire.com
 Password: AJEx2024!Admin#Secure
 Role:     CEO (Full Access)
-```
+\`\`\`
 
 ### Test Worker Account
-```
+\`\`\`
 Email:    worker@ajex-tech-empire.com
 Password: Worker2024!Secure
 Role:     Worker (Limited Access)
-```
+\`\`\`
 
 ### Test Client Account
-```
+\`\`\`
 Email:    client@ajex-tech-empire.com
 Password: Client2024!Secure
 Role:     Client (Client Dashboard Only)
-```
+\`\`\`
 
 ---
 

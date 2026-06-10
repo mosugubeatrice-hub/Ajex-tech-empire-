@@ -71,13 +71,13 @@ This document provides everything needed to deploy and maintain AJEx Tech Empire
 
 ### 2. Deploy to Vercel
 
-```bash
+\`\`\`bash
 # Push to GitHub
 git push origin main
 
 # Vercel automatically deploys from main branch
 # Monitor deployment at https://vercel.com/dashboard
-```
+\`\`\`
 
 ### 3. Post-Deployment Testing
 
@@ -111,7 +111,7 @@ git push origin main
 
 ## Architecture Overview
 
-```
+\`\`\`
 ┌─────────────────────────────────────────────────────┐
 │                  Browser / Client                    │
 └─────────────────────────────────────────────────────┘
@@ -158,13 +158,13 @@ git push origin main
          │  - Email confirmation         │
          │  - Password reset             │
          └───────────────────────────────┘
-```
+\`\`\`
 
 ## Configuration Guide
 
 ### Business Information (`lib/config.ts`)
 
-```typescript
+\`\`\`typescript
 BUSINESS_CONFIG = {
   name: "AJEx Tech Empire",
   tagline: "Premium Digital Growth Agency",
@@ -180,7 +180,7 @@ BUSINESS_CONFIG = {
   },
   // ... more config
 }
-```
+\`\`\`
 
 To change:
 1. Update `lib/config.ts`
@@ -190,7 +190,7 @@ To change:
 
 Enable/disable features without code changes:
 
-```typescript
+\`\`\`typescript
 features: {
   payments: false,        // Will enable payment processing
   subscriptions: false,   // Will enable subscription model
@@ -201,7 +201,7 @@ features: {
   analytics: false,       // Will enable analytics
   multiTenant: false,     // Will enable multi-tenant
 }
-```
+\`\`\`
 
 ## Security Considerations
 
@@ -235,7 +235,7 @@ Currently uses Supabase's built-in email for auth emails (signup confirmation, p
 To set up custom transactional emails:
 
 ### Option 1: Resend (Recommended)
-```typescript
+\`\`\`typescript
 // lib/email/send.ts
 import { Resend } from 'resend'
 
@@ -251,10 +251,10 @@ export async function sendEmail(params: EmailParams) {
   if (error) throw error
   return { success: true, messageId: data?.id }
 }
-```
+\`\`\`
 
 ### Option 2: SendGrid
-```typescript
+\`\`\`typescript
 // lib/email/send.ts
 import sgMail from '@sendgrid/mail'
 
@@ -269,7 +269,7 @@ export async function sendEmail(params: EmailParams) {
   })
   return { success: true }
 }
-```
+\`\`\`
 
 ## Database Backups
 

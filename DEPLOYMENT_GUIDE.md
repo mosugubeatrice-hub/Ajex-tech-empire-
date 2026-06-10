@@ -13,7 +13,7 @@
 
 Add these to your Vercel project settings:
 
-```env
+\`\`\`env
 # Supabase
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
@@ -27,18 +27,18 @@ EMAIL_PASSWORD=your-app-password
 
 # Optional
 POSTGRES_URL=your-connection-string
-```
+\`\`\`
 
 ---
 
 ## Step 2: Deploy to Vercel
 
 ### Option A: Git Push (Recommended)
-```bash
+\`\`\`bash
 git add .
 git commit -m "Production deployment"
 git push origin main
-```
+\`\`\`
 Vercel will automatically deploy on push to main branch.
 
 ### Option B: Manual Deploy
@@ -76,11 +76,11 @@ Vercel will automatically deploy on push to main branch.
 
 ### Update Profile Role
 In Supabase SQL Editor:
-```sql
+\`\`\`sql
 UPDATE public.profiles 
 SET role = 'ceo' 
 WHERE email = 'admin@ajex-tech-empire.com';
-```
+\`\`\`
 
 ---
 
@@ -137,9 +137,9 @@ WHERE email = 'admin@ajex-tech-empire.com';
 ## Admin Panel Access
 
 ### URL
-```
+\`\`\`
 https://your-domain.com/admin
-```
+\`\`\`
 
 ### Credentials
 - Email: `admin@ajex-tech-empire.com`

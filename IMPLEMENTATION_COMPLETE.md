@@ -50,12 +50,12 @@ Your complete enterprise-grade business management platform is ready for deploym
 
 Copy this to v0 Settings → Vars:
 
-```
+\`\`\`
 NEXT_PUBLIC_SUPABASE_URL=https://casrjmlrfesxcbuymlde.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<your-anon-key>
 SUPABASE_SERVICE_ROLE_KEY=<your-service-role-key>
 ADMIN_EMAIL=admin@ajex-tech-empire.com
-```
+\`\`\`
 
 Get credentials from: https://supabase.com/dashboard
 
@@ -63,10 +63,10 @@ Get credentials from: https://supabase.com/dashboard
 
 URL: `http://localhost:3000/admin`
 
-```
+\`\`\`
 Email:    admin@ajex-tech-empire.com
 Password: AJEx2024!Admin#Secure
-```
+\`\`\`
 
 ⚠️ Change password immediately after first login!
 

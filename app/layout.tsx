@@ -1,8 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Poppins, Montserrat, Inter } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
-import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Suspense } from "react"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Navigation } from "@/components/navigation"
@@ -74,8 +72,6 @@ export default function RootLayout({
             <main className="min-h-screen">{children}</main>
           </Suspense>
           <PremiumFooter />
-          <Analytics />
-          <SpeedInsights />
         </ThemeProvider>
       </body>
     </html>

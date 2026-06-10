@@ -1,4 +1,4 @@
-import Head from "next/head"
+import Script from "next/script"
 
 interface PremiumSEOProps {
   title?: string
@@ -20,38 +20,13 @@ export function PremiumSEO({
   const fullTitle = title.includes("AJEx Tech Empire") ? title : `${title} | AJEx Tech Empire`
 
   return (
-    <Head>
-      {/* Primary Meta Tags */}
-      <title>{fullTitle}</title>
-      <meta name="title" content={fullTitle} />
-      <meta name="description" content={description} />
-      <meta name="keywords" content={keywords} />
-      <meta name="robots" content="index, follow" />
-      <meta name="language" content="English" />
-      <meta name="author" content="AJEx Tech Empire" />
+    <>
+      {/* Primary Meta Tags - Use Metadata in layout instead */}
+      {/* This component is deprecated - use layout.tsx metadata export instead */}
 
-      {/* Open Graph / Facebook */}
-      <meta property="og:type" content={type} />
-      <meta property="og:url" content={url} />
-      <meta property="og:title" content={fullTitle} />
-      <meta property="og:description" content={description} />
-      <meta property="og:image" content={image} />
-      <meta property="og:site_name" content="AJEx Tech Empire" />
-
-      {/* Twitter */}
-      <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:url" content={url} />
-      <meta property="twitter:title" content={fullTitle} />
-      <meta property="twitter:description" content={description} />
-      <meta property="twitter:image" content={image} />
-
-      {/* Additional Meta Tags */}
-      <meta name="theme-color" content="#2563eb" />
-      <meta name="msapplication-TileColor" content="#2563eb" />
-      <link rel="canonical" href={url} />
-
-      {/* Structured Data */}
-      <script
+      {/* Structured Data using next/script */}
+      <Script
+        id="org-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
@@ -70,6 +45,6 @@ export function PremiumSEO({
           }),
         }}
       />
-    </Head>
+    </>
   )
 }

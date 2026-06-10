@@ -8,58 +8,63 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Calendar, Clock, User, ArrowLeft, Share2, BookmarkPlus, ThumbsUp } from "lucide-react"
 import Link from "next/link"
 
-// This would typically come from a CMS or database
-const blogPost = {
-  title: `The Future of Growth Strategy: AI-Powered Strategies for ${new Date().getFullYear()}`,
-  content: `
-    <p>The digital growth landscape is evolving at an unprecedented pace, with artificial intelligence leading the charge in transforming how businesses connect with their audiences. As we navigate through ${new Date().getFullYear()}, it's becoming increasingly clear that AI isn't just a buzzword—it's a fundamental shift that's reshaping every aspect of digital growth.</p>
+// Blog post content as React components
+const BlogContent = () => (
+  <>
+    <p>The digital growth landscape is evolving at an unprecedented pace, with artificial intelligence leading the charge in transforming how businesses connect with their audiences. As we navigate through {new Date().getFullYear()}, it's becoming increasingly clear that AI isn't just a buzzword—it's a fundamental shift that's reshaping every aspect of digital growth.</p>
 
-    <h2>The AI Revolution in Growth Strategy</h2>
+    <h2 className="text-2xl font-bold mt-8 mb-4 text-white">The AI Revolution in Growth Strategy</h2>
     <p>Artificial intelligence has moved beyond simple automation to become a sophisticated tool that can predict consumer behavior, personalize experiences at scale, and optimize campaigns in real-time. This transformation is enabling growth strategists to achieve levels of precision and efficiency that were previously impossible.</p>
 
-    <h3>Key AI Applications in Growth Strategy</h3>
-    <ul>
+    <h3 className="text-xl font-semibold mt-6 mb-3 text-white">Key AI Applications in Growth Strategy</h3>
+    <ul className="list-disc list-inside space-y-2 mb-4">
       <li><strong>Predictive Analytics:</strong> AI algorithms can analyze vast amounts of data to predict future customer behavior, helping strategists make informed decisions about campaign strategies and budget allocation.</li>
       <li><strong>Personalization at Scale:</strong> Machine learning enables the creation of highly personalized content and experiences for individual users, even across millions of customers.</li>
       <li><strong>Automated Content Creation:</strong> AI-powered tools can generate compelling copy, create visual content, and even produce video content tailored to specific audiences.</li>
       <li><strong>Real-time Optimization:</strong> AI systems can continuously monitor campaign performance and make automatic adjustments to improve results.</li>
     </ul>
 
-    <h2>Implementing AI Strategies</h2>
+    <h2 className="text-2xl font-bold mt-8 mb-4 text-white">Implementing AI Strategies</h2>
     <p>To successfully implement AI-powered growth strategies, businesses need to focus on several key areas:</p>
 
-    <h3>1. Data Foundation</h3>
+    <h3 className="text-xl font-semibold mt-6 mb-3 text-white">1. Data Foundation</h3>
     <p>AI is only as good as the data it's trained on. Establishing a robust data collection and management system is crucial for AI success. This includes:</p>
-    <ul>
+    <ul className="list-disc list-inside space-y-2 mb-4">
       <li>Implementing comprehensive tracking across all touchpoints</li>
       <li>Ensuring data quality and consistency</li>
       <li>Creating unified customer profiles</li>
       <li>Maintaining compliance with privacy regulations</li>
     </ul>
 
-    <h3>2. Technology Integration</h3>
+    <h3 className="text-xl font-semibold mt-6 mb-3 text-white">2. Technology Integration</h3>
     <p>Successful AI implementation requires seamless integration with existing technology stacks. This involves:</p>
-    <ul>
+    <ul className="list-disc list-inside space-y-2 mb-4">
       <li>Selecting AI tools that integrate well with current systems</li>
       <li>Ensuring data flows smoothly between platforms</li>
       <li>Training teams on new technologies</li>
       <li>Establishing clear workflows and processes</li>
     </ul>
 
-    <h2>The Future Outlook</h2>
+    <h2 className="text-2xl font-bold mt-8 mb-4 text-white">The Future Outlook</h2>
     <p>As we look ahead, several trends are emerging that will shape the future of AI in digital growth:</p>
 
-    <blockquote>
+    <blockquote className="border-l-4 border-blue-500 pl-4 italic my-6 text-gray-300">
       "The companies that will thrive in the AI-powered growth landscape are those that can balance technological innovation with human creativity and empathy."
     </blockquote>
 
     <p>The integration of AI in digital growth is not just about efficiency—it's about creating more meaningful connections with customers. By leveraging AI's capabilities while maintaining the human touch that drives emotional connections, businesses can create growth strategies that are both highly effective and genuinely engaging.</p>
 
-    <h2>Getting Started</h2>
+    <h2 className="text-2xl font-bold mt-8 mb-4 text-white">Getting Started</h2>
     <p>For businesses looking to embrace AI-powered growth strategies, the key is to start small and scale gradually. Begin with one or two AI applications that align with your current goals, measure their impact, and then expand your AI capabilities based on what you learn.</p>
 
     <p>The future of digital growth is here, and it's powered by artificial intelligence. The question isn't whether to adopt AI—it's how quickly you can integrate it into your growth strategy to stay competitive in an increasingly AI-driven world.</p>
-  `,
+  </>
+)
+
+// This would typically come from a CMS or database
+const blogPost = {
+  title: `The Future of Growth Strategy: AI-Powered Strategies for ${new Date().getFullYear()}`,
+  content: null, // No longer using dangerouslySetInnerHTML
   author: "Sarah Johnson",
   date: new Date().toISOString().split("T")[0],
   readTime: "8 min read",
@@ -133,10 +138,9 @@ export default function BlogPostPage() {
           </div>
 
           {/* Article Content */}
-          <div
-            className="prose prose-lg prose-invert max-w-none mb-12"
-            dangerouslySetInnerHTML={{ __html: blogPost.content }}
-          />
+          <div className="prose prose-lg prose-invert max-w-none mb-12 text-gray-300">
+            <BlogContent />
+          </div>
 
           {/* Tags */}
           <div className="mb-12">

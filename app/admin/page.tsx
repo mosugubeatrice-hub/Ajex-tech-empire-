@@ -6,13 +6,14 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Link from "next/link"
 import { ROLES } from "@/lib/constants"
+import { Users, FileText, BarChart3, DollarSign } from "lucide-react"
 
 export default function AdminPage() {
   const [stats, setStats] = useState({
+    totalUsers: 0,
+    totalWorkers: 0,
+    totalClients: 0,
     totalProjects: 0,
-    totalCustomers: 0,
-    totalInvoices: 0,
-    totalRevenue: 0,
   })
   const [loading, setLoading] = useState(true)
 
@@ -20,10 +21,17 @@ export default function AdminPage() {
     const fetchStats = async () => {
       try {
         const response = await fetch("/api/admin/stats")
+        if (!response.ok) throw new Error("Failed to fetch stats")
         const data = await response.json()
         setStats(data)
       } catch (error) {
         console.error("Failed to fetch stats:", error)
+        setStats({
+          totalUsers: 0,
+          totalWorkers: 0,
+          totalClients: 0,
+          totalProjects: 0,
+        })
       } finally {
         setLoading(false)
       }
@@ -44,20 +52,24 @@ export default function AdminPage() {
           {/* Stats Grid */}
           <div className="grid md:grid-cols-4 gap-6 mb-8">
             {[
-              { label: "Total Projects", value: stats.totalProjects },
-              { label: "Total Customers", value: stats.totalCustomers },
-              { label: "Total Invoices", value: stats.totalInvoices },
-              { label: "Total Revenue", value: `$${stats.totalRevenue.toLocaleString()}` },
-            ].map((stat, i) => (
-              <Card key={i} className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 border-blue-500/20">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-400">{stat.label}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-white">{loading ? "..." : stat.value}</div>
-                </CardContent>
-              </Card>
-            ))}
+              { label: "Total Users", value: stats.totalUsers, icon: Users },
+              { label: "Workers", value: stats.totalWorkers, icon: BarChart3 },
+              { label: "Clients", value: stats.totalClients, icon: Users },
+              { label: "Projects", value: stats.totalProjects, icon: FileText },
+            ].map((stat, i) => {
+              const Icon = stat.icon
+              return (
+                <Card key={i} className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 border-blue-500/20">
+                  <CardHeader className="pb-2 flex flex-row items-center justify-between">
+                    <CardTitle className="text-sm font-medium text-gray-400">{stat.label}</CardTitle>
+                    <Icon className="w-4 h-4 text-blue-400" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold text-white">{loading ? "-" : stat.value}</div>
+                  </CardContent>
+                </Card>
+              )
+            })}
           </div>
 
           {/* Management Sections */}
